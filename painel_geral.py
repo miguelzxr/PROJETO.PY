@@ -1,6 +1,6 @@
 usuarios = []
 animais = []
-
+leite = []
 
 ADMIN_USUARIO = "ADMIN"
 ADMIN_SENHA = 'ADM123'
@@ -16,7 +16,7 @@ while True:
     opcao = input("Escolha: ").upper()
 
     if opcao == "S":
-        print("Encerrando programa")
+        print("OBRIGADO, VOLTE SEMPRE!!")
         break
 
     elif opcao == "NEW":
@@ -64,6 +64,7 @@ while True:
         print("[AT]Atualizar Animais")
         print('[R]Remover Aniamis')
         print("[S] Sair")
+        print("[P] Painel de produção")
         
         opcao_2 = input('Digite sua escolha: ').upper()
 
@@ -104,11 +105,34 @@ while True:
 
         elif opcao_2 == 'R':
              print("para apagar informe os dados abaixo: ")
-        identificação = input("Digite seu usuario: ")
+        identificação = input("Digite sua identifição: ")
         for posicao in range(len(animais)):
             if animais[posicao][1] == identificação:
                 animais.pop(1)
                 print("=" * 50)
                 print("Usuario removido com sucesso!!!")
                 print("=" * 50)
-                
+    
+        if opcao_2 == "P":
+            print("===== MENU DE PRODUÇÃO =====")
+            print("[1] Cadastrar Produção De leite")
+            print("[2] Estoque do leite")
+
+
+            opcao_3 = input("Digite sua escolha: ")
+
+            if opcao_3 == 0:
+                break
+
+            elif opcao_3 == 1:
+                l = float(input("Produção de leite: [L]"))
+                leite.append(l)
+                continue
+            elif opcao_3 == 2:
+                print('-' * 50)
+                for u in usuarios:
+                    print(u[0], 'litros de leite')
+                    continue
+
+            
+

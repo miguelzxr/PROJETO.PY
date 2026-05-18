@@ -6,8 +6,8 @@ leite = 0
 data_retirada = []
 animais_venda = []
 
-ADMIN_USUARIO = "a" 
-ADMIN_SENHA = 'a'
+ADMIN_USUARIO = "admin" 
+ADMIN_SENHA = 'adm123'
 
 
 
@@ -76,15 +76,15 @@ while True:  #MENU PRINCIPAL
                 
                 
                 elif opcao_2 == 'CA':   # CADASTRAR ANIMAL
-                    status = input('Status: (em lactação [lac], para engorda [gorda], disponível para venda [venda])').upper()
+                    status = input('Status: (em lactação [lac], para engorda [gorda], disponível para venda [venda]): ').upper()
                     
                     if status == "VENDA":
                         peso_animal = float(input("qual o peso do animal: "))
                         arroba_animal = float(input("qual o valor da arroba: "))
                         valor_animal = (peso_animal / 15) * arroba_animal #a cada 15 kg uma arroba
 
-                        tipo = input('Tipo do animal:   (Bovino de Leite, Caprino, Ovino, Suíno/Leitão)')
-                        identificacao = input('Identificação:    (brinco[A-Z]/número[0-9])')
+                        tipo = input('Tipo do animal:   (Bovino de Leite, Caprino, Ovino, Suíno/Leitão): ')
+                        identificacao = input('Identificação:    (brinco[A-Z]/número[0-9]): ')
 
                         animais_venda.append([tipo, identificacao, status, valor_animal])
                         print("Animal cadastrado!")
@@ -92,8 +92,8 @@ while True:  #MENU PRINCIPAL
                       
                     
                     
-                    tipo = input('Tipo do animal:   (Bovino de Leite, Caprino, Ovino, Suíno/Leitão)')
-                    identificacao = input('Identificação:    (brinco[A-Z]/número[0-9])')
+                    tipo = input('Tipo do animal:   (Bovino de Leite, Caprino, Ovino, Suíno/Leitão): ')
+                    identificacao = input('Identificação:    (brinco[A-Z]/número[0-9]): ')
 
                     animais.append([tipo, identificacao, status])
                     print("Animal cadastrado!")
@@ -118,9 +118,9 @@ while True:  #MENU PRINCIPAL
 
                     for i in range(len(animais)):
                         if animais[i][1] == ident:
-                            tipo = input("Novo tipo:   (Bovino de Leite, Caprino, Ovino, Suíno/Leitão)")
-                            identificacao = input("Nova identificação:   (brinco[A-Z]/número[0-9])")
-                            status = input("Novo status:   (em lactação, para engorda, disponível para venda")
+                            tipo = input("Novo tipo:   (Bovino de Leite, Caprino, Ovino, Suíno/Leitão): ")
+                            identificacao = input("Nova identificação:   (brinco[A-Z]/número[0-9]): ")
+                            status = input("Novo status:   (em lactação, para engorda, disponível para venda: ")
 
                             peso_animal = float(input("qual o peso do animal: "))
                             arroba_animal = float(input("qual o valor da arroba: "))
@@ -136,9 +136,9 @@ while True:  #MENU PRINCIPAL
 
                     for iv in range(len(animais_venda)):        
                         if animais_venda[iv][1] == ident:
-                            tipo = input("Novo tipo:   (Bovino de Leite, Caprino, Ovino, Suíno/Leitão)")
-                            identificacao = input("Nova identificação:   (brinco[A-Z]/número[0-9])")
-                            status = input("Novo status:   (em lactação, para engorda, disponível para venda")
+                            tipo = input("Novo tipo:   (Bovino de Leite, Caprino, Ovino, Suíno/Leitão): ")
+                            identificacao = input("Nova identificação:   (brinco[A-Z]/número[0-9]): ")
+                            status = input("Novo status:   (em lactação, para engorda, disponível para venda: ")
 
                             peso_animal = float(input("qual o peso do animal: "))
                             arroba_animal = float(input("qual o valor da arroba: "))
@@ -322,6 +322,7 @@ while True:  #MENU PRINCIPAL
                         dia = int(input("Qual dia da retirada: "))
                         mes = int(input("Qual mês da retirada (1-12): "))
                         ano = int(input("Qual ano da retirada: "))
+                        nome_cliente = input('Nome para contato: ')
 
                         if mes < 1 or mes > 12:
                             print("Mês inválido.")
@@ -331,12 +332,13 @@ while True:  #MENU PRINCIPAL
                             print("Dia inválido para o mês informado.")
                         else:
                             print("Data registrada com sucesso!!!")
-                            data_retirada.append([dia, mes, ano])
-                            
+                            data_retirada.append([dia, mes, ano, nome_cliente ])
+                           
                     elif opcao_4 == "4":  # LISTA AGENDAMENTO
                         print("-" * 50)
                         for d in data_retirada:
-                            print(d[0], '/', d[1], '/', d[2])
+                            print(d[0], '/', d[1], '/', d[2], 'cliente:',d[3])
                         print("-" * 50)
+                        
     else:
-        print("Opção inválida.")
+        print("Opção inválida.") #final

@@ -3,11 +3,11 @@ animais = []
 produtos_adicionais = []
 lojinha = []
 leite = 0
-data_ret = []
+data_retirada = []
 animais_venda = []
 
-ADMIN_USUARIO = "admin" 
-ADMIN_SENHA = 'adm123'
+ADMIN_USUARIO = "a" 
+ADMIN_SENHA = 'a'
 
 
 
@@ -72,7 +72,7 @@ while True:  #MENU PRINCIPAL
                 elif opcao_2 == 'LISTA_U':    # LISTA USUÁRIOS
                     print('-' * 50)
                     for u in usuarios:
-                            print(u[0], '-', u[1])
+                            print("usuario: ", u[0], '-', "senha: ", u[1])
                 
                 
                 elif opcao_2 == 'CA':   # CADASTRAR ANIMAL
@@ -88,11 +88,13 @@ while True:  #MENU PRINCIPAL
 
                         animais_venda.append([tipo, identificacao, status, valor_animal])
                         print("Animal cadastrado!")
-                        break
+                        continue
+                      
                     
                     
                     tipo = input('Tipo do animal:   (Bovino de Leite, Caprino, Ovino, Suíno/Leitão)')
                     identificacao = input('Identificação:    (brinco[A-Z]/número[0-9])')
+
                     animais.append([tipo, identificacao, status])
                     print("Animal cadastrado!")
 
@@ -101,9 +103,15 @@ while True:  #MENU PRINCIPAL
 
                 elif opcao_2 == 'LISTA':  #LISTA ANIMAIS
                     print('=' * 50)
+                    for av in animais_venda:
+                        print(av[0], '-', av[1], '-', av[2])
+                    print('=' * 50)
+
                     for a in animais:
                         print(a[0], '-', a[1], '-', a[2])
                     print('=' * 50)
+
+                  
 
                 elif opcao_2 == 'AT':  #ATUALIZAR ANIMAL
                     ident = input("Digite a identificação do animal: ")
@@ -121,9 +129,28 @@ while True:  #MENU PRINCIPAL
                             animais[i] = [tipo, identificacao, status, valor_animal]
 
                             print("Atualizado com sucesso!")
-                            break
-                    else:
-                        print("Animal não encontrado.")
+                            continue
+                        else:
+                            print("Animal não encontrado.")
+                            
+
+                    for iv in range(len(animais_venda)):        
+                        if animais_venda[iv][1] == ident:
+                            tipo = input("Novo tipo:   (Bovino de Leite, Caprino, Ovino, Suíno/Leitão)")
+                            identificacao = input("Nova identificação:   (brinco[A-Z]/número[0-9])")
+                            status = input("Novo status:   (em lactação, para engorda, disponível para venda")
+
+                            peso_animal = float(input("qual o peso do animal: "))
+                            arroba_animal = float(input("qual o valor da arroba: "))
+
+                            valor_animal = (peso_animal / 15) * arroba_animal                           
+                            animais_venda[iv] = [tipo, identificacao, status, valor_animal]
+
+                            print("Atualizado com sucesso!")
+                            continue    
+                           
+                        else:
+                            print("Animal não encontrado.")
 
 
 
@@ -134,9 +161,19 @@ while True:  #MENU PRINCIPAL
                         if animais[i][1] == ident:
                             animais.pop(i)
                             print("Removido com sucesso!")
-                            break
-                    else:
-                        print("Animal não encontrado.")
+                            continue
+
+                        else:
+                            print("Animal não encontrado.")
+
+                    for iv in range(len(animais_venda)):
+                        if animais_venda[iv][1] == ident:
+                            animais_venda.pop(iv)
+                            print("Removido com sucesso!")
+                            continue
+
+                        else:
+                            print("Animal não encontrado.")        
 
                 elif opcao_2 == "MP":   # MENU PRODUTOS
                         while True:
@@ -168,13 +205,12 @@ while True:  #MENU PRINCIPAL
                                 kg = float(input('Quantidade (kg): '))
                                 leite_q = float(input("qual a quantidade de leite por KG: "))
                                 leite_t = kg * leite_q
-                                leite -= leite_t
                                 
                                 if leite > leite_t:
                                     nome = input('Produto: ')
                                     valor = float(input('Valor por kg: '))
-                                    estoque = float(input("Quantidade em estoque: "))                               
-                                    produtos_adicionais.append([nome, kg, valor,estoque])
+                                    produtos_adicionais.append([nome, kg, valor])
+                                    leite -= leite_t
                                     print("Produto cadastrado!")
                                 
                                 else:
@@ -235,68 +271,72 @@ while True:  #MENU PRINCIPAL
 
                         if lojinha1 == "1":
                             for p in produtos_adicionais:
-                                if p[0].upper() == lojinha1.upper():
+                                print(p[0], p[1],'kg(s)',p[2],'R$')
+                                compra_f = input("Qual produto gostaria de comprar: ").lower()
+                                if p[0] == compra_f:
                                     quantidade = float(input("Quantos KG: "))
 
-                                    if quantidade <= p[3]:
+                                    if p[1] >= quantidade:
                                         total = quantidade * p[2]
 
-                                        p[3] -= quantidade
+                                        p[1] -= quantidade
 
                                         print("Compra realizada com sucesso!")
-
                                      # NOTA FISCAL
-
                                         print("=" * 40)
                                         print("NOTINHA")
                                         print("=" * 40)
-                                        print(f"Cliente: {user}")
                                         print("Produto:", p[0])
                                         print("Quantidade:", quantidade)
-                                        print("Valor unitário: R$", p[2])
                                         print("Total: R$", total)
                                         print("=" * 40)
+                                    else:
+                                        print("não temos estoque")
+                                        break 
+
                         if lojinha1 == "2":
                             for an in animais_venda:
-                                if an[0].upper() == animais.upper():
-                                    identificacao_an = float(input("identificação do animal: "))
-                                    if identificacao_an == an[1]:
-                                        print("Compra realizada com sucesso!")
+                                print("tipo: ", an[0], "identificacao: ", an[1], "status: ", an[2], "valor: ", an[3])
+                                compra_f = input("identificação do animal: ").lower()
+                                if an[1] == compra_f:
+                                    print("Obrigado pela preferencia, volte sempre!!")
 
+                                    total = an[3]
+                                    animais_venda.pop()
+                                    print("Compra realizada com sucesso!")
                                      # NOTA FISCAL
-                                        print("=" * 40)
-                                        print("NOTINHA DO CLIENTE")
-                                        print("=" * 40)
-                                        print(f"Cliente: {user}")
-                                        print("Produto:", an[0])
-                                        print("identificação do animal:", identificacao_an)
-                                        print("Valor unitário: R$", an[3])
-                                        print("Total: R$", an[opcao_3])
-                                        print("=" * 40)                                        
-                                        animais_venda.pop(quantidade)
+                                    print("=" * 40)
+                                    print("NOTINHA")
+                                    print("=" * 40)
+                                    print("Tipo animal:", an[0])
+                                    print("Total: R$", total)
+                                    print("=" * 40)
+                                else:
+                                    print("não temos estoque")
+                                
+                                    break 
 
-                    elif opcao_4 == "3":   # AGENDAR RETIRADA =================
+                    elif opcao_4 == "3":   # AGENDAR RETIRADA
+                        dias_mes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-                        data = input("digite a data: dd/mm/aa")
+                        dia = int(input("Qual dia da retirada: "))
+                        mes = int(input("Qual mês da retirada (1-12): "))
+                        ano = int(input("Qual ano da retirada: "))
 
-                        dataFormatada = data.split("/")
-
-                        dia = dataFormatada[0]
-                        mes = dataFormatada[1]
-                        ano = dataFormatada[2]
-
-                        if dia > 31 and mes < 12 and ano >= 2026:
-                            dataFormatada.append(data_ret)
-
-                            print("Data agendada com sucesso!!")
+                        if mes < 1 or mes > 12:
+                            print("Mês inválido.")
+                        elif ano < 2026:
+                            print("Ano inválido.")
+                        elif dia < 1 or dia > dias_mes[mes - 1]:
+                            print("Dia inválido para o mês informado.")
                         else:
-                            print("Data inválida!")    
-
-                    
+                            print("Data registrada com sucesso!!!")
+                            data_retirada.append([dia, mes, ano])
+                            
                     elif opcao_4 == "4":  # LISTA AGENDAMENTO
-                        print("===== DATAS AGENDADAS =====")
-                        
-                        for d in data_ret:
-                            print(d)
+                        print("-" * 50)
+                        for d in data_retirada:
+                            print(d[0], '/', d[1], '/', d[2])
+                        print("-" * 50)
     else:
         print("Opção inválida.")
